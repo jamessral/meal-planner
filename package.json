@@ -1,0 +1,29 @@
+{
+  "name": "meal-planner-js",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "./bin/www",
+    "dev": "mongod --dbpath ~/data/db & nodemon ./bin/www",
+    "lint": "./node_modules/eslint/bin/eslint.js .",
+    "test": "./node_modules/jest/bin/jest"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "mongoose": "^5.0.5",
+    "morgan": "~1.9.0",
+    "node-sass-middleware": "0.9.8",
+    "pug": "2.0.0-beta11",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "concurrent": "^0.3.2",
+    "eslint": "^4.17.0",
+    "jest": "^22.2.2",
+    "nodemon": "^1.14.12",
+    "prettier": "1.10.2"
+  }
+}
