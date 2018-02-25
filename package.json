@@ -5,8 +5,8 @@
   "scripts": {
     "start": "./bin/www",
     "dev": "mongod --dbpath ~/data/db & nodemon ./bin/www",
-    "lint": "./node_modules/eslint/bin/eslint.js .",
-    "test": "./node_modules/jest/bin/jest"
+    "lint": "npx eslint .",
+    "test": "npx jest"
   },
   "dependencies": {
     "body-parser": "~1.18.2",

@@ -39,5 +39,28 @@ describe('IngredientController', () => {
         },
       ])
     })
+
+    it('should return an emtpy array if none passed', () => {
+      expect(IngredientController.getAll()).toEqual({ ingredients: [] })
+    })
+  })
+
+  describe('getOne', () => {
+    it('should return mapped ingredient if ingredient given', () => {
+      const ingredient = {
+        _id: 1,
+        name: 'test',
+        description: 'description',
+        price: 42,
+        dontShowMe: 'please',
+        meEither: 'ok',
+      }
+      expect(IngredientController.getOne(ingredient)).toEqual({
+        id: 1,
+        name: 'test',
+        description: 'description',
+        price: 42,
+      })
+    })
   })
 })
