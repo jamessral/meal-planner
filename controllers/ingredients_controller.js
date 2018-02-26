@@ -1,51 +1,59 @@
-const getAll = (ingredients) => {
-  if (ingredients.length > 0) {
-    return ingredients.map(ingredient => ({
-      id: ingredient._id,
-      name: ingredient.name,
-      description: ingredient.description,
-      price: ingredient.price,
-    }))
-  }
+const Ingredient = require('../models/ingredient')
+const Views = require('../views/ingredients_view')
 
-  return { ingredients: [] }
+const index = (req, res) => {
+  Ingredient.fetchAll()
+    .then(ingredients => res.json(Views.getAll(ingredients.models)))
+    .catch(err => res.json(Views.error(err)))
 }
 
-const getOne = (ingredient) => {
-  if (ingredient) {
-    const { name, description, price, _id } = ingredient
-    return {
-      id: _id,
-      name,
-      description,
-      price
-    }
-  }
+const create = (req, res) => {
+  const {
+    name,
+    description,
+    price,
+  } = req.body
 
-  return { message: 'Error, could not find ingredient', status: 500 }
+  const ingredient = new Ingredient({
+    name,
+    description,
+    price,
+  })
+
+  ingredient.save()
+    .then(ingredient => res.status(201).json(
+      Views.create(ingredient.model))
+    )
+    .catch(err => res.status(422).json(
+      Views.error(`Ingredient couldn't be saved. ${err}`, 422))
+    )
 }
 
-const create = (ingredient) => {
-  if (ingredient) {
-    return {
-      id: ingredient._id,
-      name: ingredient.name,
-      description: ingredient.description,
-      price: ingredient.price,
-    }
-  }
-
-  return { message: 'Error, could not create ingredient', status: 500 }
+const name = (req, res) => {
+  const name = req.params.name
+  Ingredient
+    .where('name', name)
+    .fetch()
+    .then(ingredients => res.json(Views.getAll(ingredients.models)))
+    .catch(() => res.status(404).json(
+      Views.error(`Ingredient with name ${name} not found`, 404)
+    ))
 }
 
-const error = (err, status) => ({
-  message: `Error: ${err}`,
-  status,
-})
+const show = (req, res) => {
+  const id = req.params.id
+  Ingredient
+    .where('id', id)
+    .fetch()
+    .then(ingredient => res.json(Views.getOne(ingredient.model)))
+    .catch(() => res.status(404).json(
+      Views.error(`Ingredient with id ${id} not found`, 404)
+    ))
+}
 
 module.exports = {
+  index,
   create,
-  error,
-  getAll,
-  getOne,
+  name,
+  show
 }

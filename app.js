@@ -1,40 +1,24 @@
 const express = require('express')
-const path = require('path')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
-const sassMiddleware = require('node-sass-middleware')
 
-const index = require('./routes/index')
-const users = require('./routes/users')
-const ingredients = require('./routes/ingredients')
-const recipes = require('./routes/recipes')
-const db = require('./db')
+const IndexRoutes = require('./routes/index')
+const UsersRoutes = require('./routes/users')
+const IngredientsRoutes = require('./routes/ingredients')
+const RecipesRoutes = require('./routes/recipes')
 
 const app = express()
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'pug')
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(sassMiddleware({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public'),
-  indentedSyntax: false, // true = .sass and false = .scss
-  sourceMap: true,
-}))
-app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', index)
-app.use('/users', users)
-app.use('/ingredients', ingredients)
-app.use('/recipes', recipes)
+app.use('/', IndexRoutes)
+app.use('/api/v1/users', UsersRoutes)
+app.use('/api/v1/ingredients', IngredientsRoutes)
+app.use('/api/v1/recipes', RecipesRoutes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
