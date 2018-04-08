@@ -1,8 +1,8 @@
-const IngredientController = require('../../controllers/ingredients_controller')
+const JsonViews = require('../../../views/json/ingredient_views')
 /**
- * Test for IngredientController
+ * Test for IngredientView
  */
-describe('IngredientController', () => {
+describe('IngredientView', () => {
   describe('getAll', () => {
     it('should return array of mapped ingredients when ingredients passed', () => {
       const ingredients = [
@@ -24,7 +24,7 @@ describe('IngredientController', () => {
         },
       ]
 
-      expect(IngredientController.getAll(ingredients)).toEqual([
+      expect(JsonViews.getAll(ingredients)).toEqual([
         {
           id: 1,
           name: 'test1',
@@ -41,7 +41,7 @@ describe('IngredientController', () => {
     })
 
     it('should return an emtpy array if none passed', () => {
-      expect(IngredientController.getAll()).toEqual({ ingredients: [] })
+      expect(JsonViews.getAll()).toEqual({ ingredients: [] })
     })
   })
 
@@ -55,7 +55,7 @@ describe('IngredientController', () => {
         dontShowMe: 'please',
         meEither: 'ok',
       }
-      expect(IngredientController.getOne(ingredient)).toEqual({
+      expect(JsonViews.getOne(ingredient)).toEqual({
         id: 1,
         name: 'test',
         description: 'description',

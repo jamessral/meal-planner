@@ -1,11 +1,14 @@
-const bookshelf = require('../bookshelf')
-const Ingredient = require('./ingredient')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const Recipe = bookshelf.Model.extend({
-  tableName: 'recipes',
-  ingredients() {
-    return this.belongsToMany(Ingredient)
-  }
+const Recipe = new Schema({
+  name: String,
+  description: String,
+  estimatedTime: Number,
+  estimatedCost: Number,
+  ingredientIds: [Schema.Types.ObjectId],
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
 })
 
 module.exports = Recipe

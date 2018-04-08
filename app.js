@@ -2,11 +2,22 @@ const express = require('express')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
 const IndexRoutes = require('./routes/index')
 const UsersRoutes = require('./routes/users')
 const IngredientsRoutes = require('./routes/ingredients')
 const RecipesRoutes = require('./routes/recipes')
+
+mongoose.connect('mongodb://localhost/mealplanner')
+
+const db = mongoose.connection
+/* eslint-disable no-console */
+db.on('error', err =>
+  console.log(`Unable to connect to Mongo Server.\n Error: ${err}`)
+)
+
+db.on('open', () => console.log('Connected to Mongo\n'))
 
 const app = express()
 
