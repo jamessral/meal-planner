@@ -2,8 +2,9 @@ const Ingredient = require('../models/ingredient')
 const JsonViews = require('../views/json/ingredient_views')
 
 const index = (req, res) => {
-  Ingredient.all()
-    .then(ingredients => res.json(JsonViews.getAll(ingredients.models)))
+  Ingredient.find({})
+    .exec()
+    .then(ingredients => res.json(JsonViews.getAll(ingredients)))
     .catch(err => res.json(JsonViews.error(err)))
 }
 
@@ -19,7 +20,7 @@ const create = (req, res) => {
   ingredient
     .save()
     .then(ingredient =>
-      res.status(201).json(JsonViews.create(ingredient.model))
+      res.status(201).json(JsonViews.create(ingredient))
     )
     .catch(err =>
       res
@@ -32,7 +33,8 @@ const name = (req, res) => {
   const name = req.params.name
   Ingredient.find()
     .where('name', name)
-    .then(ingredients => res.json(JsonViews.getAll(ingredients.models)))
+    .exec()
+    .then(ingredients => res.json(JsonViews.getAll(ingredients)))
     .catch(() =>
       res
         .status(404)
@@ -42,9 +44,10 @@ const name = (req, res) => {
 
 const show = (req, res) => {
   const id = req.params.id
-  Ingredient.find()
-    .where('id', id)
-    .then(ingredient => res.json(JsonViews.getOne(ingredient.model)))
+  Ingredient.findOne()
+    .where('_id', id)
+    .exec()
+    .then(ingredient => res.json(JsonViews.getOne(ingredient)))
     .catch(() =>
       res
         .status(404)

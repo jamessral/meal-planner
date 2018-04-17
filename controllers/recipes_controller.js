@@ -2,23 +2,23 @@ const Recipe = require('../models/recipe')
 const JsonViews = require('../views/json/recipe_views')
 
 const index = (req, res) => {
-  Recipe.all()
-    .then(recipes => res.json(JsonViews.getAll(recipes.models)))
+  Recipe.find({})
+    .exec()
+    .then(recipes => res.json(JsonViews.getAll(recipes)))
     .catch(err => res.status(500).json(JsonViews.error(err)))
 }
 
 const create = (req, res) => {
-  const { name, description, price } = req.body.parse
+  const { name, description } = req.body
 
   const recipe = new Recipe({
     name,
     description,
-    price,
   })
 
   recipe
     .save()
-    .then(recipe => res.status(201).json(JsonViews.create(recipe.model)))
+    .then(recipe => res.status(201).json(JsonViews.create(recipe)))
     .catch(err =>
       res
         .status(422)
@@ -26,11 +26,25 @@ const create = (req, res) => {
     )
 }
 
+const remove = (req, res) => {
+  console.log('in remove', req.params)
+  const id = req.params.id
+  Recipe.remove({ _id: id })
+    .exec()
+    .then(() => res.status(200).json({ message: 'Deleted successfully' }))
+    .catch(err =>
+      res
+        .status(400)
+        .json(JsonViews.error(`Recipe couldn't be deleted, ${err}`, 400))
+    )
+}
+
 const name = (req, res) => {
   const name = req.params.name
-  Recipe.find()
+  Recipe.find({})
+    .exec()
     .where('name', name)
-    .then(recipes => res.json(JsonViews.getAll(recipes.models)))
+    .then(recipes => res.json(JsonViews.getAll(recipes)))
     .catch(() =>
       res
         .status(404)
@@ -40,9 +54,10 @@ const name = (req, res) => {
 
 const show = (req, res) => {
   const id = req.params.id
-  Recipe.find()
-    .where('id', id)
-    .then(recipe => res.json(JsonViews.getOne(recipe.model)))
+  Recipe.findOne({})
+    .where('_id', id)
+    .exec()
+    .then(recipe => res.json(JsonViews.getOne(recipe)))
     .catch(() =>
       res
         .status(404)
@@ -51,8 +66,9 @@ const show = (req, res) => {
 }
 
 module.exports = {
-  index,
   create,
+  index,
   name,
+  remove,
   show,
 }

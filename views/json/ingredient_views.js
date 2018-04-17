@@ -26,7 +26,6 @@ const getOne = ingredient => {
 const create = ingredient => {
   if (ingredient) {
     const { _id, name, description, price } = ingredient
-
     return {
       id: _id,
       name,

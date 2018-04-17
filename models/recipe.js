@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Recipe = new Schema({
-  name: String,
+  name: { type: String, required: true },
   description: String,
   estimatedTime: Number,
   estimatedCost: Number,
@@ -11,4 +11,4 @@ const Recipe = new Schema({
   updated_at: { type: Date, default: Date.now },
 })
 
-module.exports = Recipe
+module.exports = mongoose.model('Recipe', Recipe)
