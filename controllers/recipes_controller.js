@@ -27,7 +27,6 @@ const create = (req, res) => {
 }
 
 const remove = (req, res) => {
-  console.log('in remove', req.params)
   const id = req.params.id
   Recipe.remove({ _id: id })
     .exec()
@@ -54,8 +53,7 @@ const name = (req, res) => {
 
 const show = (req, res) => {
   const id = req.params.id
-  Recipe.findOne({})
-    .where('_id', id)
+  Recipe.findById(id)
     .exec()
     .then(recipe => res.json(JsonViews.getOne(recipe)))
     .catch(() =>
@@ -65,10 +63,45 @@ const show = (req, res) => {
     )
 }
 
+const update = (req, res) => {
+  const id = req.params.id
+  const { name, description } = req.body
+
+  // only update params that we are given
+  const updateParams = { name, description }
+
+  Object.keys(updateParams).forEach(param => {
+    if (updateParams[param] === undefined) {
+      delete updateParams[param]
+    }
+  })
+
+  Recipe.findByIdAndUpdate(
+    id,
+    updateParams,
+    { new: true } // return updated record
+  )
+    .exec()
+    .then(recipe => {
+      res.status(202).json(JsonViews.getOne(recipe))
+    })
+    .catch(err =>
+      res
+        .status(400)
+        .json(
+          JsonViews.error(
+            `Recipe with id ${id} could not be udpated. Error: ${err}`,
+            400
+          )
+        )
+    )
+}
+
 module.exports = {
   create,
   index,
   name,
   remove,
   show,
+  update,
 }

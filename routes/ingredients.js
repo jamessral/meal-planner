@@ -3,8 +3,10 @@ const router = express.Router()
 const IngredientsController = require('../controllers/ingredients_controller')
 
 router.get('/', IngredientsController.index)
-router.use('/name/:name', IngredientsController.name)
-router.use('/:id', IngredientsController.show)
 router.post('/', IngredientsController.create)
+router.get('/:id', IngredientsController.show)
+router.put('/:id', IngredientsController.update)
+router.get('/name/:name', IngredientsController.name)
+router.delete('/:id', IngredientsController.remove)
 
 module.exports = router

@@ -21,6 +21,8 @@ const getOne = ingredient => {
       price,
     }
   }
+
+  return error('Unable to find ingredient', 404)
 }
 
 const create = ingredient => {
@@ -33,6 +35,8 @@ const create = ingredient => {
       price,
     }
   }
+
+  return error('Unable to create ingredient', 500)
 }
 
 const error = (err, status) => ({

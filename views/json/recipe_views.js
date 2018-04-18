@@ -9,6 +9,8 @@ const create = recipe => {
       ingredientIds: ingredientIds || [],
     }
   }
+
+  return error('Unable to create recipe', 500)
 }
 
 const getOne = recipe => {
@@ -22,6 +24,8 @@ const getOne = recipe => {
       ingredientIds: ingredientIds || [],
     }
   }
+
+  return error('Unable to find recipe', 404)
 }
 
 const getAll = (recipes = []) => {
