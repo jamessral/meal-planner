@@ -3,6 +3,7 @@ const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 const IndexRoutes = require('./routes/index')
 const UsersRoutes = require('./routes/users')
@@ -20,6 +21,8 @@ db.on('error', err =>
 db.on('open', () => console.log('Connected to Mongo\n'))
 
 const app = express()
+
+app.use(cors())
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
