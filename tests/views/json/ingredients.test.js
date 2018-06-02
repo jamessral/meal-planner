@@ -1,7 +1,7 @@
-const JsonViews = require('../../../views/json/ingredient_views')
+const JsonViews = require('../../../views/json/ingredientViews')
 /**
-* Test for IngredientView
-*/
+ * Test for IngredientView
+ */
 describe('IngredientView', () => {
   describe('getAll', () => {
     it('should return array of mapped ingredients when ingredients passed', () => {

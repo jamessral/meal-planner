@@ -7,27 +7,14 @@
     },
     "extends": "eslint:recommended",
     "rules": {
-        "indent": [
-            "error",
-            2
-        ],
         "linebreak-style": [
             "error",
             "unix"
         ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ],
         "prefer-const": ["error", {
-                "destructuring": "any",
-                "ignoreReadBeforeAssign": false
-            }
-        ],
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+        }],
         "no-var": "error",
         "comma-dangle": ["error", {
             "arrays": "only-multiline",

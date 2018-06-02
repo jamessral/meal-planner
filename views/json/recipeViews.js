@@ -1,6 +1,11 @@
 const create = recipe => {
   if (recipe) {
-    const { _id, name, description, ingredientIds } = recipe
+    const {
+      _id,
+      name,
+      description,
+      ingredientIds
+    } = recipe
 
     return {
       id: _id,
@@ -15,7 +20,12 @@ const create = recipe => {
 
 const getOne = recipe => {
   if (recipe) {
-    const { _id, name, description, ingredientIds } = recipe
+    const {
+      _id,
+      name,
+      description,
+      ingredientIds
+    } = recipe
 
     return {
       id: _id,
@@ -38,7 +48,9 @@ const getAll = (recipes = []) => {
     }))
   }
 
-  return { recipes: [] }
+  return {
+    recipes: []
+  }
 }
 
 const error = (err, status) => ({

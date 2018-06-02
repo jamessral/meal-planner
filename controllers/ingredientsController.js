@@ -1,5 +1,5 @@
 const Ingredient = require('../models/ingredient')
-const JsonViews = require('../views/json/ingredient_views')
+const JsonViews = require('../views/json/ingredientViews')
 
 const index = (req, res) => {
   Ingredient.find({})
@@ -30,9 +30,15 @@ const create = (req, res) => {
 const remove = (req, res) => {
   const id = req.params.id
 
-  Ingredient.remove({ _id: id })
+  Ingredient.remove({
+    _id: id,
+  })
     .exec()
-    .then(() => res.status(200).json({ message: 'Deleted successfully' }))
+    .then(() =>
+      res.status(200).json({
+        message: 'Deleted successfully',
+      })
+    )
     .catch(err =>
       res
         .status(400)
@@ -69,7 +75,11 @@ const show = (req, res) => {
 const update = (req, res) => {
   const id = req.params.id
   const { name, description, price } = req.body
-  const updateParams = { name, description, price }
+  const updateParams = {
+    name,
+    description,
+    price,
+  }
 
   // we only want to update provided keys
   Object.keys(updateParams).forEach(param => {
@@ -81,7 +91,9 @@ const update = (req, res) => {
   Ingredient.findByIdAndUpdate(
     id,
     updateParams,
-    { new: true } // return updated record
+    {
+      new: true,
+    } // return updated record
   )
     .exec()
     .then(ingredient => {

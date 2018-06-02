@@ -1,4 +1,4 @@
-const JsonViews = require('../../../views/json/recipe_views')
+const JsonViews = require('../../../views/json/recipeViews')
 /**
  * Test for RecipesJsonViews
  */
@@ -64,8 +64,9 @@ describe('RecipeJsonViews', () => {
     })
 
     it('should return error if ingredient not given', () => {
-      expect(JsonViews.getOne())
-        .toEqual(JsonViews.error('Unable to find recipe', 404))
+      expect(JsonViews.getOne()).toEqual(
+        JsonViews.error('Unable to find recipe', 404)
+      )
     })
   })
 
@@ -89,8 +90,9 @@ describe('RecipeJsonViews', () => {
     })
 
     it('should return error if recipe does not exist', () => {
-      expect(JsonViews.create())
-        .toEqual(JsonViews.error('Unable to create recipe', 500))
+      expect(JsonViews.create()).toEqual(
+        JsonViews.error('Unable to create recipe', 500)
+      )
     })
   })
 
