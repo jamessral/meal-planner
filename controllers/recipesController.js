@@ -1,3 +1,5 @@
+const contains = require('ramda/src/contains')
+
 const Recipe = require('../models/recipe')
 const JsonViews = require('../views/json/recipeViews')
 
@@ -113,12 +115,35 @@ const update = (req, res) => {
 
 const addIngredient = (req, res) => {
   const id = req.params.id
+  const ingredientId = req.params.ingredientId
+
   Recipe.findById(id)
     .exec()
+    .then(recipe => {
+      if (!contains(ingredientId, recipe.ingredientIds)) {
+        recipe.ingredientIds.push(ingredientId)
+      }
+      return recipe.save()
+    })
+    .then(rec => {
+      res.status(200)
+        .json({
+          recipe: rec,
+        })
+    })
+}
+
+const getIngredients = (req, res) => {
+  const id = req.params.id
+
+  Recipe.findById(id)
+    .populate('ingredientI')
 }
 
 module.exports = {
+  addIngredient,
   create,
+  getIngredients,
   index,
   name,
   remove,
